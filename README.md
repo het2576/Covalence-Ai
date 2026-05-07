@@ -1,218 +1,231 @@
-# Covalence AI⚡ - Enterprise Data Assistant
+# 🌐 Covalence-Ai
 
-A stunning, production-ready MVP that combines BI analytics, document search, and role-based AI assistance in one elegant interface. Built for hackathons and enterprise demos.
+> Covalence AI integrates BI analytics, document search, and role-based AI assistance into a single interface, providing enterprise employees with instant, role-appropriate answers across disconnected data systems.
 
-## 🚀 Features
+[![React 18](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Supabase (PostgreSQL, Auth, Real-time)](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-### 🎯 Core Functionality
-- **AI-Powered Chat Interface**: Natural language queries across all data sources
-- **Role-Based Access Control**: Admin, Manager, Analyst, and Intern permissions
-- **Multi-Modal Responses**: Interactive tables, charts, document summaries, and image previews
-- **Real-Time Analytics**: Live dashboard with query metrics and user activity
-- **Admin Panel**: Dataset management, user administration, and activity logs
+## 📖 Table of Contents
 
-### 🎨 Design Excellence
-- **Glassmorphic UI**: Modern design with backdrop blur effects and soft gradients
-- **Smooth Animations**: Framer Motion powered transitions and micro-interactions
-- **Responsive Design**: Optimized for desktop and mobile devices
-- **Professional Color Palette**: Blue/purple gradient theme with excellent contrast
-
-### 🔧 Technical Stack
-- **Frontend**: React 18, TypeScript, Tailwind CSS, Framer Motion
-- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
-- **Charts**: Recharts for beautiful data visualizations
-- **Icons**: Lucide React for consistent iconography
-- **Authentication**: Email/password with role-based permissions
-
-## 🏗️ Quick Start
-
-### Prerequisites
-- Node.js 18+ and npm
-- Supabase account (free tier works)
-
-### Setup Instructions
-
-1. **Clone and Install**
-   ```bash
-   git clone <repository-url>
-   cd covalence-ai
-   npm install
-   ```
-
-2. **Configure Supabase**
-   - Create a new Supabase project
-   - Copy `.env.example` to `.env`
-   - Add your Supabase URL and anon key
-
-3. **Set Up Database**
-   ```sql
-   -- Create profiles table
-   CREATE TABLE profiles (
-     id UUID PRIMARY KEY REFERENCES auth.users(id),
-     email TEXT UNIQUE NOT NULL,
-     full_name TEXT NOT NULL,
-     role TEXT CHECK (role IN ('admin', 'manager', 'analyst', 'intern')) NOT NULL,
-     created_at TIMESTAMPTZ DEFAULT NOW()
-   );
-
-   -- Enable RLS
-   ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-
-   -- Create policies
-   CREATE POLICY "Users can read own profile" ON profiles
-     FOR SELECT USING (auth.uid() = id);
-
-   CREATE POLICY "Users can update own profile" ON profiles
-     FOR UPDATE USING (auth.uid() = id);
-   ```
-
-4. **Start Development**
-   ```bash
-   npm run dev
-   ```
-
-### Demo Accounts
-For quick testing, you can create these demo accounts:
-- **Admin**: admin@demo.com / demo123
-- **Manager**: manager@demo.com / demo123  
-- **Analyst**: analyst@demo.com / demo123
-- **Intern**: intern@demo.com / demo123
-
-## 🎪 Hackathon Demo Script
-
-### 🎬 Opening Hook (30 seconds)
-"Enterprise employees waste 2.5 hours daily searching for data across disconnected systems. What if they could just ask questions in plain English and get instant, role-appropriate answers?"
-
-### 🔍 Problem Statement (1 minute)
-- Data silos across departments
-- Complex SQL/BI tools require training
-- Security concerns with data access
-- Slow time-to-insights
-
-### 💡 Solution Demo (3 minutes)
-
-1. **Role-Based Intelligence**
-   - Show different user roles getting filtered results
-   - Demonstrate security controls in action
-
-2. **Multi-Modal AI Responses**
-   - SQL query → Interactive table with trends
-   - Document search → Smart summary card
-   - Analytics request → Dynamic charts
-
-3. **Enterprise-Ready Features**
-   - Admin panel with dataset management
-   - Real-time analytics dashboard
-   - Activity logs and compliance tracking
-
-### 🚀 Market Opportunity (1 minute)
-- $50B+ business intelligence market
-- 87% of companies struggle with data accessibility
-- Growing demand for conversational AI in enterprise
-
-### 🎯 Competitive Advantage
-Unlike generic AI assistants or traditional BI tools, Covalence AI uniquely combines:
-- **Security-first architecture** with role-based filtering
-- **Multi-modal intelligence** across structured and unstructured data  
-- **Beautiful, non-technical interface** anyone can use
-- **Enterprise-grade admin controls** for compliance and governance
-
-## 🏗️ Architecture
-
-### Frontend Structure
-```
-src/
-├── components/
-│   ├── Auth/           # Authentication pages
-│   ├── Chat/           # Chat interface and responses
-│   ├── Analytics/      # Dashboard and metrics
-│   ├── Admin/          # Admin panel components
-│   ├── Layout/         # Sidebar and navigation
-│   ├── Settings/       # User preferences
-│   └── ui/             # Reusable UI components
-├── lib/
-│   ├── auth.tsx        # Authentication context
-│   ├── supabase.ts     # Database client
-│   └── utils.ts        # Utility functions
-└── App.tsx             # Main application
-```
-
-### Key Features Implementation
-
-#### 🔐 Role-Based Access Control
-```typescript
-// Different data access based on user role
-const filterDataByRole = (data: any[], userRole: string) => {
-  if (userRole === 'intern') {
-    return data.filter(item => !item.sensitive)
-  }
-  return data // Full access for other roles
-}
-```
-
-#### 🤖 AI Response Types
-- **Table**: SQL query results with interactive sorting
-- **Chart**: Data visualizations using Recharts
-- **Summary**: Document analysis with confidence scores
-- **Image**: Media search with AI-generated captions
-
-#### 📊 Real-Time Analytics
-- Query volume tracking
-- Response time monitoring  
-- User activity logs
-- Role-based usage patterns
-
-## 🛠️ Customization
-
-### Adding New Data Sources
-1. Update the `mockDatasets` array in `AdminPanel.tsx`
-2. Implement data parsing logic for your format
-3. Add appropriate icons and styling
-
-### Custom AI Responses
-1. Extend the `ChatResponse` component
-2. Add new response types to the interface
-3. Implement rendering logic for your data format
-
-### Branding
-- Update colors in `tailwind.config.js`
-- Replace the logo and app name
-- Customize the gradient themes
-
-## 📈 Production Deployment
-
-### Environment Variables
-```bash
-VITE_SUPABASE_URL=your_production_supabase_url
-VITE_SUPABASE_ANON_KEY=your_production_anon_key
-VITE_OPENAI_API_KEY=your_openai_api_key
-```
-
-### Build for Production
-```bash
-npm run build
-npm run preview
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙋‍♂️ Support
-
-For questions or support:
-- Create an issue on GitHub
-- Contact the development team
-- Check the documentation wiki
+- [🎯 About](#-about)
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
+- [📋 Prerequisites](#-prerequisites)
+- [⚙️ Installation](#%EF%B8%8F-installation)
+- [🔐 Environment Variables](#-environment-variables)
+- [🚀 Usage](#-usage)
+- [📁 Project Structure](#-project-structure)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ---
 
-**Built with ❤️ for the future of enterprise data interaction**
+## 🎯 About
+
+Enterprise employees frequently encounter a significant challenge: wasting valuable time searching for critical data scattered across disparate and disconnected systems. This fragmentation leads to inefficiencies, delayed decision-making, and a reduced capacity for strategic work, as individuals are forced to manually aggregate information from various sources.
+
+Covalence AI directly addresses this pain point by providing a unified, intelligent platform. It integrates BI analytics, document search, and role-based AI assistance into one elegant interface, delivering instant, context-aware answers tailored to an employee's specific role. By centralizing data access and leveraging AI for natural language queries, Covalence AI transforms data retrieval from a time-consuming chore into a swift, intuitive interaction, empowering users to focus on analysis and action rather than search.
+
+---
+
+## ✨ Features
+
+- 🤖 **AI-powered Chat Interface** — Engage with an intelligent chat interface to query diverse data sources using natural language.
+- 👥 **Role-based Access Control** — Securely manage user permissions with distinct roles: Admin, Manager, Analyst, and Intern.
+- 📊 **Multi-modal AI Responses** — Receive comprehensive AI answers presented as interactive tables, dynamic charts, and concise document summaries.
+- 📈 **Real-time Analytics Dashboard** — Monitor query performance and user engagement through a dynamic, real-time analytics dashboard.
+- ⚙️ **Admin Panel** — Centralized control for managing datasets, administering users, and reviewing detailed activity logs.
+- 🎨 **Modern Glassmorphic UI** — Experience a visually stunning, responsive interface enhanced with Framer Motion animations and a glassmorphic aesthetic.
+
+---
+
+## 🛠️ Tech Stack
+
+**🎨 Frontend**
+| Technology | Version | Purpose |
+|---|---|---|
+| React | 18 | UI library for building interactive user interfaces |
+| TypeScript | Latest | Type-safe JavaScript for enhanced code quality |
+| Tailwind CSS | Latest | Utility-first CSS framework for rapid styling |
+| Framer Motion | Latest | Production-ready motion library for React |
+| Recharts | Latest | Composable charting library built with React and D3 |
+| Lucide React | Latest | Beautifully crafted open-source icons for React |
+| React Router | Latest | Declarative routing for React applications |
+
+**⚙️ Backend & Infrastructure**
+| Technology | Version | Purpose |
+|---|---|---|
+| Supabase | Latest | Open-source Firebase alternative (PostgreSQL, Auth, Real-time) |
+
+---
+
+## 📋 Prerequisites
+
+> ⚠️ Make sure you have all of these installed before starting.
+
+1.  **Node.js 18+** — [Download](https://nodejs.org/en/download) · Check: `node --version`
+2.  **npm** — Comes with Node.js · Check: `npm --version`
+3.  **Supabase account** — [Sign up](https://supabase.com/dashboard/sign-up) · Required for database, authentication, and real-time features.
+
+---
+
+## ⚙️ Installation
+
+### Step 1 — Clone the repository
+
+```bash
+git clone https://github.com/het2576/Covalence-Ai.git
+cd Covalence-Ai
+```
+
+### Step 2 — Install dependencies
+
+```bash
+npm install
+```
+
+### Step 3 — Configure environment
+
+```bash
+cp .env.example .env.local
+```
+
+> 💡 Open `.env.local` and fill in your values. See [Environment Variables](#-environment-variables) below.
+
+### Step 4 — Build the project
+
+```bash
+npm run build
+```
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+# ✅ Required: Supabase project URL for connecting to the database.
+VITE_SUPABASE_URL=
+
+# ✅ Required: Supabase public anonymous key for client-side access.
+VITE_SUPABASE_ANON_KEY=
+
+# ✅ Required: OpenAI API key for integrating AI-powered features.
+VITE_OPENAI_API_KEY=
+```
+
+| Variable | Required | Description |
+|---|---|---|
+| `VITE_SUPABASE_URL` | ✅ Yes | Supabase project URL for connecting to the database. |
+| `VITE_SUPABASE_ANON_KEY` | ✅ Yes | Supabase public anonymous key for client-side access. |
+| `VITE_OPENAI_API_KEY` | ✅ Yes | OpenAI API key for integrating AI-powered features. |
+
+> 🔒 **Never commit your `.env.local` file.** It's already in `.gitignore`.
+
+---
+
+## 🚀 Usage
+
+### Development Server
+
+```bash
+npm run dev
+```
+
+Open **http://localhost:5173** in your browser.
+
+### Quick Start Example
+
+Once the application is running and configured with your Supabase and OpenAI keys, navigate to the dashboard. Log in using your Supabase credentials. You can then interact with the AI chat interface by typing a natural language query.
+
+For instance, try asking:
+
+```
+Show me sales data for Q3 last year, broken down by region.
+```
+
+The AI will process your request and present the information in a multi-modal format, potentially including an interactive chart or a summarized table, based on the available data sources.
+
+---
+
+## 📁 Project Structure
+
+```
+Covalence-Ai/
+├── covalence/          # Main application source and public assets
+│   ├── src/            # Core application logic, components, pages
+│   │   ├── components/ # Reusable UI components
+│   │   ├── pages/      # Route-specific views and layouts
+│   │   ├── hooks/      # Custom React hooks
+│   │   ├── utils/      # Utility functions and helpers
+│   │   └── main.tsx    # Application entry point
+│   ├── public/         # Static assets (e.g., index.html, images)
+│   ├── tailwind.config.js # Tailwind CSS configuration
+│   └── vite.config.ts  # Vite build configuration
+├── .env.example        # Environment variables template
+├── package.json        # Project dependencies and scripts
+└── README.md           # This documentation file
+```
+
+The project adopts a modular structure, organizing code within the `covalence/src` directory into logical domains such as components, pages, and utilities. This approach promotes maintainability and scalability by keeping related functionalities co-located, making it easier to navigate and extend the codebase.
+
+---
+
+## 🤝 Contributing
+
+Contributions make this project better. Here's how to get involved:
+
+### 🐛 Reporting Bugs
+
+Before creating a bug report:
+- ✅ Check the [existing issues](https://github.com/het2576/Covalence-Ai/issues)
+- ✅ Collect your environment details (OS, Node version, browser)
+- ✅ Reproduce the bug consistently
+
+**[Create a bug report →](https://github.com/het2576/Covalence-Ai/issues/new?labels=bug&template=bug_report.md)**
+
+### 💡 Suggesting Features
+
+Feature suggestions are tracked as GitHub issues.
+
+**[Suggest a feature →](https://github.com/het2576/Covalence-Ai/issues/new?labels=enhancement&template=feature_request.md)**
+
+### 🔧 Pull Requests
+
+1.  🍴 **Fork** the repository
+2.  🌿 **Create** a feature branch: `git checkout -b feat/amazing-feature`
+3.  💾 **Commit** your changes: `git commit -m 'feat: add amazing feature'`
+4.  📤 **Push** to the branch: `git push origin feat/amazing-feature`
+5.  🔁 **Open** a Pull Request
+
+**Commit convention:** We use [Conventional Commits](https://conventionalcommits.org)
+- `feat:` — new feature
+- `fix:` — bug fix
+- `docs:` — documentation only
+- `refactor:` — code change, no feature or fix
+- `test:` — add or update tests
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+You're free to use, modify, and distribute this project for any purpose.
+See the [LICENSE](LICENSE) file for full details.
+
+---
+
+<div align="center">
+
+### Built with ❤️ by [het2576](https://github.com/het2576)
+
+If this project helped you, consider giving it a ⭐
+
+[⭐ Star this repo](https://github.com/het2576/Covalence-Ai) · [🐛 Report a Bug](https://github.com/het2576/Covalence-Ai/issues) · [💡 Request a Feature](https://github.com/het2576/Covalence-Ai/issues)
+
+</div>
